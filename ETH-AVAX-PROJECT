@@ -1,0 +1,53 @@
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.13;
+
+contract error_handling_demo {
+
+    //Variable Declarations
+    uint public constant coin_cost = 100;
+    address public owner_address;
+    uint public owned_coins = 0;
+    uint public loan_inventory = 10000;
+    
+
+    constructor(address _owner_address) {
+        owner_address = _owner_address;
+    }
+
+    //Mapping address to balances
+    mapping(address => uint) public balances;
+    
+    function addBalance(address _address, uint _value) public{
+        balances[_address] += _value;
+    }
+
+    function buy_coin (address seller_address, uint coin_amount) public{
+        uint total_cost = coin_amount * coin_cost;
+        require(balances[owner_address] < total_cost, "Insufficient balance");
+        balances[owner_address] -= total_cost;
+        balances[seller_address] += total_cost;
+        owned_coins += coin_amount;
+    }
+
+    function sell_coin(address seller_address, uint coin_amount) public{
+        uint total_cost = coin_amount * coin_cost;
+        balances[owner_address] += total_cost;
+        balances[seller_address] -= total_cost;
+        owned_coins -= coin_amount;
+        assert(balances[owner_address] >= total_cost); 
+    }
+
+    function borrow_loan(uint loan_amount) public{
+        balances[owner_address] += loan_amount;
+        loan_inventory -= loan_amount;
+        if(owned_coins < 3){
+            revert("At least three coins are required to apply for loan");
+        }
+    }
+
+    function owner_balance() public view returns (uint){
+        return balances[owner_address];
+    }
+
+    
+}
