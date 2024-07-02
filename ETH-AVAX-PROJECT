@@ -23,7 +23,7 @@ contract error_handling_demo {
 
     function buy_coin (address seller_address, uint coin_amount) public{
         uint total_cost = coin_amount * coin_cost;
-        require(balances[owner_address] < total_cost, "Insufficient balance");
+        require(balances[owner_address] > total_cost, "Insufficient balance");
         balances[owner_address] -= total_cost;
         balances[seller_address] += total_cost;
         owned_coins += coin_amount;
