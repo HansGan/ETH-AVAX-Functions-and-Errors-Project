@@ -6,6 +6,7 @@ For this project, write a smart contract that implements the require(), assert()
 
 The project revolves around showcasing different types of error handling (require, revert, and assert) through a program on coin transactions. 
 Essentially, it allows an owner account to buy and sell coins. Additionally it also allows the owner to apply for loan for extra wei.
+
 The first function buy_coin() implements the require() error handling method where the user is unable to buy coins if his/her current balance is less than the total cost (computed as coin amount multiplied to coin cost). On the other hand, the second function called sell_coin() uses the same concept but implements the assert() method to prevent the unlikely scenario that the owner does not recieve the equivalent amount of wei after selling his/her coins to another account. Laslty, the borrow_loan() function utilizes the revert() method to essentially revert all changes to state variables if the owner does not own at least 3 coins. Overall, these function demonstrate the different usage of error handling methods in solidity.
 
 ## Getting Started
